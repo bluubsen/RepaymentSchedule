@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilgungsplan</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/repaymentSchedule">
+            <img src="https://www.hypoport.de/hypoport/uploads/2016/01/hypoport-logo.png"
+                 data-height-percentage="54" data-actual-width="218" data-actual-height="36"
+                 alt="Hypoport AG">
+        </a>
+    </div>
+</nav>
+<main class="container">
+    <h1 class="my-4">Tilgungsplan</h1>
+    <form class="mw-25" action="#" method="post" th:action="@{/repaymentSchedule}"
+          th:object="${repaymentinformation}">
+        <div class="form-group">
+            <label for="loanAmount">Darlehensbetrag:</label>
+            <input type="text" id="loanAmount" th:field="*{loanAmount}"
+                   th:class="${#fields.hasErrors('loanAmount')} ?  'form-control is-invalid' : 'form-control'">
+            <label th:if="${#fields.hasErrors('loanAmount')}" th:class="text-danger">Betrag muss größer 0 sein.</label>
+        </div>
+        <div class="form-group">
+            <label for="debitInterest">Sollzins in %:</label>
+            <input type="text" id="debitInterest" th:field="*{debitInterestInPercentage}"
+                   th:class="${#fields.hasErrors('debitInterestInPercentage')} ?  'form-control is-invalid' : 'form-control'">
+            <label th:if="${#fields.hasErrors('debitInterestInPercentage')}" th:class="text-danger">Bitte geben Sie
+                einen
+                Zinssatz ein.</label>
+        </div>
+        <div class="form-group">
+            <label for="initialRepayment">Anfängliche Tilgungsrate in %:</label>
+            <input type="text" id="initialRepayment" th:field="*{initialRepaymentInPercentage}"
+                   th:class="${#fields.hasErrors('initialRepaymentInPercentage')} ?  'form-control is-invalid' : 'form-control'">
+            <label th:if="${#fields.hasErrors('initialRepaymentInPercentage')}" th:class="text-danger">Die anfängliche
+                Tilgunsrate muss
+                zwischen 1% und 100% sein.</label>
+        </div>
+        <div class="form-group">
+            <label for="fixedInterest">Zinsbindung in Jahren:</label>
+            <input type="text" id="fixedInterest" th:field="*{durationInYears}"
+                   th:class="${#fields.hasErrors('durationInYears')} ?  'form-control is-invalid' : 'form-control'">
+            <label th:if="${#fields.hasErrors('durationInYears')}" th:class="text-danger">Die Laufzeit muss zwischen 1
+                und 60 Jahren sein.</label>
+        </div>
+        <div>
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

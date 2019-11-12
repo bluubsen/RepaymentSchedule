@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilgungsplan</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/repaymentSchedule">
+            <img src="https://www.hypoport.de/hypoport/uploads/2016/01/hypoport-logo.png"
+                 data-height-percentage="54" data-actual-width="218" data-actual-height="36"
+                 alt="Hypoport AG">
+        </a>
+    </div>
+</nav>
+
+<main class="container">
+    <h1 class="my-4">Tilgungsplan</h1>
+    <div class="my-4">
+        <!-- parameters of given repayment schedule -->
+        <label class="d-lg-block">Darlehensbetrag: <span
+                th:text="${repaymentinformation.loanAmount}"></span></label>
+        <label class="d-lg-block">Sollzins in %: <span
+                th:text="${repaymentinformation.debitInterestInPercentage}"></span></label>
+        <label class="d-lg-block">Anfängliche Tilgungsrate in %: <span
+                th:text="${repaymentinformation.initialRepaymentInPercentage}"></span></label>
+        <label class="d-lg-block">Zinsbindung in Jahren: <span
+                th:text="${repaymentinformation.durationInYears}"></span></label>
+    </div>
+    <table class="table table-hover my-4">
+        <thead class="thead-light">
+        <tr>
+            <th>Datum</th>
+            <th>Restschuld</th>
+            <th>Zinsen</th>
+            <th>Tilgung</th>
+            <th>Rate</th>
+        </tr>
+        </thead>
+        <tbody class="table-striped">
+        <tr th:each="monthlyEntry : ${repaymentSchedule.allMonthlyEntries}">
+            <td th:text="${monthlyEntry.date}"></td>
+            <td><span th:text=${monthlyEntry.remainingLoanInCent}/100/>€</td>
+            <td><span th:text=${monthlyEntry.interestsInCent}/100/>€</td>
+            <td><span th:text=${monthlyEntry.repaymentInCent}/100/>€</td>
+            <td><span th:text=${monthlyEntry.annuityRateInCent}/100/>€</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
